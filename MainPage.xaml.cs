@@ -1,15 +1,33 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using KinopoiskApp.ViewModels;
+using KinopoiskApp.Views;
+using Windows.UI.Xaml.Controls;
 
 namespace KinopoiskApp
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a <see cref="Frame">.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         public MainPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+            ContentFrame.Navigate(typeof(MoviesPageView));
+        }
+
+        private void NavigationView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        {
+            if (args.InvokedItemContainer is NavigationViewItem item)
+            {
+                var tag = item.Tag?.ToString();
+
+                switch (tag)
+                {
+                    case "movies":
+                        ContentFrame.Navigate(typeof(MoviesPageView));
+                        break;
+                    case "favorites":
+                        ContentFrame.Navigate(typeof(FavoritesPageView));
+                        break;
+                }
+            }
         }
     }
 }
